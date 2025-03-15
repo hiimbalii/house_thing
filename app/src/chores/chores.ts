@@ -19,7 +19,7 @@ export const getStartDate = async (): Promise<Date> => {
 export const getDeadline = async () => {
   const startDate = await getStartDate();
   const weekNr = await getWeek();
-  return add(startDate, { weeks: (weekNr + 1) * 2, days: -1 });
+  return add(startDate, { weeks: (weekNr + 1) * 2 });
 };
 export const CHORE_LIST = [
   { shower: "354", toilet: "353", "sink room": "352", hallway: "351" },

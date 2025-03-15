@@ -49,12 +49,11 @@ export async function POST(req: Request) {
   }
   const deadline = await getDeadline();
   let diff = differenceInCalendarDays(deadline, new Date());
-  if (diff !== -1 && diff !== 0 && diff !== 5 && diff !== 14) {
+  if (diff !== 0 && diff !== 1 && diff !== 5 && diff !== 14) {
     return new Response(JSON.stringify({ error: "Not today: ", diff }), {
       status: 500,
     });
   }
-  diff++;
 
   const resend = new Resend(process.env.EMAIL_API_KEY);
 
