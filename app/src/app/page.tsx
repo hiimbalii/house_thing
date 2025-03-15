@@ -3,7 +3,7 @@ import { getName } from "@/chores/rooms";
 import LogoutButton from "@/components/main/logout";
 import { RoomsModal } from "@/components/rooms/room-modal";
 import { Text, Container, For, Flex, DataList } from "@chakra-ui/react";
-import { add, format } from "date-fns";
+import { add, format, formatDistance, formatRelative } from "date-fns";
 import { cookies } from "next/headers";
 
 export default async function Home() {
@@ -61,9 +61,16 @@ export default async function Home() {
         <Text>Deadline: </Text>
         <Text ml={1} fontWeight="bold">
           {format(
+            add(startDate, { weeks: (weekNr + 1) * 2, days: -1 }),
+            "MMMM dd. "
+          )}
+          (
+          {formatDistance(
             add(startDate, { weeks: (weekNr + 1) * 2 }),
-            "MMMM dd. (eee)"
-          )}{" "}
+            new Date(),
+            { addSuffix: true }
+          )}
+          )
         </Text>
       </Flex>
       <RoomsModal />
