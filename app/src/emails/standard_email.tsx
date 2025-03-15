@@ -26,7 +26,7 @@ export const StandardEmail = ({
   reminder,
 }: VercelInviteUserEmailProps) => {
   const previewText = reminder
-    ? `You have ${timeLeft} days to clean ${taskName}`
+    ? `You have ${timeLeft} day${timeLeft > 1 ? "s" : ""} to clean ${taskName}`
     : `New bi-weekly cleaning task: ${taskName}`;
 
   const CLUES = {
@@ -63,10 +63,15 @@ export const StandardEmail = ({
             <Heading className="text-black text-[24px] font-normal text-center p-0 my-[30px] mx-0">
               {reminder
                 ? timeLeft > 0
-                  ? `${timeLeft} days left to clean!`
+                  ? `${timeLeft} day${timeLeft > 1 ? "s" : ""} left to clean!`
                   : "Cleaning deadline is today!"
                 : `New cleaning task for you!`}
             </Heading>
+            {timeLeft === 0 || timeLeft === 14 ? (
+              <Text className="text-gray text-[14px] leading-[24px] italic">
+                You may have recieved 2 emails today! make sure to doublecheck
+              </Text>
+            ) : null}
             <Text className="text-black text-[14px] leading-[24px]">
               Hello {tenantName},
             </Text>

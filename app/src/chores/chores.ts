@@ -1,15 +1,20 @@
-import { add, parse } from "date-fns";
+import { add, differenceInCalendarDays, parse } from "date-fns";
 import { createClient } from "redis";
 
 const redis = await createClient({
   url: process.env.REDIS_URL,
 }).connect();
-export const getWeek = async (): Promise<number> =>
-  parseInt((await redis.get("week")) ?? "0");
-export const nextWeek = async () => {
-  const week = await getWeek();
-  await redis.set("week", week + 1);
-};
+export const getWeek = async (startDate?: Date): Promise<number> =>
+  Math.max(
+    Math.floor(
+      differenceInCalendarDays(
+        new Date(),
+        startDate ?? (await getStartDate())
+      ) / 14
+    ),
+    0
+  );
+
 export const getStartDate = async (): Promise<Date> => {
   const startStr = await redis.get("start_date");
   if (!startStr) throw Error("Set start_date");
@@ -18,7 +23,7 @@ export const getStartDate = async (): Promise<Date> => {
 
 export const getDeadline = async () => {
   const startDate = await getStartDate();
-  const weekNr = await getWeek();
+  const weekNr = await getWeek(startDate);
   return add(startDate, { weeks: (weekNr + 1) * 2 });
 };
 export const CHORE_LIST = [
