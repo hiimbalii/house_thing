@@ -8,8 +8,11 @@ import {
   CloseButton,
   Link,
   Card,
+  Flex,
 } from "@chakra-ui/react";
 import { getCookie } from "cookies-next";
+import { cookies } from "next/headers";
+import LogoutButton from "../main/logout";
 async function RoomCard({ roomNumber }: { roomNumber: string }) {
   const name = await getName(roomNumber);
   const title = name ?? roomNumber;
@@ -28,9 +31,9 @@ async function RoomCard({ roomNumber }: { roomNumber: string }) {
     </Card.Root>
   );
 }
-export function RoomsModal() {
+export async function RoomsModal() {
   const roomNumbers = ["349", "350", "351", "352", "353", "354"];
-  const localRoomNr = getCookie("roomNr");
+  const roomNr = (await cookies()).get("roomNr")?.value;
   return (
     <Dialog.Root size="xl">
       <Dialog.Trigger asChild>
@@ -44,11 +47,18 @@ export function RoomsModal() {
               <Dialog.Title>Which room are you in?</Dialog.Title>
             </Dialog.Header>
             <Dialog.Body>
-              <SimpleGrid columns={[2, null, 3]} gap="10px">
-                <For each={roomNumbers}>
-                  {(item) => <RoomCard key={item} roomNumber={item} />}
-                </For>
-              </SimpleGrid>
+              {roomNr ? (
+                <Flex flexDir="column" alignItems="center" gap={3}>
+                  <RoomCard roomNumber={roomNr} />
+                  <LogoutButton />
+                </Flex>
+              ) : (
+                <SimpleGrid columns={[2, null, 3]} gap="10px">
+                  <For each={roomNumbers}>
+                    {(item) => <RoomCard key={item} roomNumber={item} />}
+                  </For>
+                </SimpleGrid>
+              )}
             </Dialog.Body>
             <Dialog.CloseTrigger asChild>
               <CloseButton size="sm" />
