@@ -48,7 +48,10 @@ export default async function Home() {
       <Flex>
         <Text>Deadline: </Text>
         <Text ml={1} fontWeight="bold">
-          {format(add(startDate, { weeks: (weekNr + 1) * 2 }), "MMM dd.")}{" "}
+          {format(
+            add(startDate, { weeks: (weekNr + 1) * 2 }),
+            "MMMM dd. (eee)"
+          )}{" "}
         </Text>
       </Flex>
       <RoomsModal />
