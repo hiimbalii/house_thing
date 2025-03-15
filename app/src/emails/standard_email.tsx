@@ -11,7 +11,7 @@ import {
   Text,
 } from "@react-email/components";
 import * as React from "react";
-import { add, format } from "date-fns";
+import { add, format, formatDistance } from "date-fns";
 interface VercelInviteUserEmailProps {
   tenantName: string;
   taskName: string;
@@ -19,7 +19,7 @@ interface VercelInviteUserEmailProps {
   reminder?: boolean;
 }
 
-export const VercelInviteUserEmail = ({
+export const StandardEmail = ({
   tenantName,
   taskName,
   timeLeft,
@@ -77,15 +77,21 @@ export const VercelInviteUserEmail = ({
             <Text className="text-black text-[14px] leading-[24px]">
               The deadline for this task is:{" "}
               <span className="font-bold">
-                {format(add(new Date(), { days: timeLeft }), "MMMM dd. (EEE.)")}
+                {format(add(new Date(), { days: timeLeft }), "MMMM dd. (EEE, ")}
+                {formatDistance(
+                  add(new Date(), { days: timeLeft }),
+                  new Date(),
+                  { addSuffix: true }
+                )}
+                {")"}
               </span>
             </Text>
             <Text className="pt-2">Best regards, your roommates :)</Text>
           </Container>
-          {CLUES[taskName] && (
+          {CLUES[taskName as keyof typeof CLUES] && (
             <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] max-w-[465px]">
               <Section>
-                {(CLUES[taskName] ?? []).map((clue) => (
+                {(CLUES[taskName as keyof typeof CLUES] ?? []).map((clue) => (
                   <Text
                     key={clue}
                     className="text-black text-[10px] leading-none"
@@ -102,11 +108,11 @@ export const VercelInviteUserEmail = ({
   );
 };
 
-VercelInviteUserEmail.PreviewProps = {
+StandardEmail.PreviewProps = {
   tenantName: "Daniel",
   taskName: "hallway",
   timeLeft: 14,
   // reminder: true,
 } as VercelInviteUserEmailProps;
 
-export default VercelInviteUserEmail;
+export default StandardEmail;

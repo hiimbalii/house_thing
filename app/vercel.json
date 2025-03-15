@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/send-email/route.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/send-email",
+      "schedule": "16 30 * * *",
+      "timezone": "ETC"
+    }
+  ]
+}
