@@ -14,11 +14,13 @@ export default async function Home() {
   const chore_list = CHORE_LIST;
   const currChores = chore_list[weekNr];
   const startDate = await getStartDate();
+  const names = { _: "" };
 
   for (const chore of Object.entries(currChores)) {
     const [choreName, choreRoom] = chore;
     const name = await getName(choreRoom);
-    if (name) currChores[choreName as keyof typeof currChores] = name;
+    if (!name) continue;
+    names[choreRoom as keyof typeof names] = name;
   }
   return (
     <Container mx={[1, null, "40"]} my={1}>
@@ -35,14 +37,24 @@ export default async function Home() {
       </Text>
       <DataList.Root orientation="horizontal" mb={2}>
         <For each={chores}>
-          {(chore) => (
-            <DataList.Item key={chore}>
-              <DataList.ItemLabel>{chore}</DataList.ItemLabel>
-              <DataList.ItemValue>
-                {currChores[chore as keyof typeof currChores]}
-              </DataList.ItemValue>
-            </DataList.Item>
-          )}
+          {(chore) => {
+            const roomie = currChores[chore as keyof typeof currChores];
+            const roomieName = names[roomie as keyof typeof names];
+            return (
+              <DataList.Item key={chore}>
+                <DataList.ItemLabel
+                  fontWeight={roomie === roomNr ? "bold" : undefined}
+                >
+                  {chore}
+                </DataList.ItemLabel>
+                <DataList.ItemValue
+                  fontWeight={roomie === roomNr ? "bold" : undefined}
+                >
+                  {roomieName ?? roomie}
+                </DataList.ItemValue>
+              </DataList.Item>
+            );
+          }}
         </For>
       </DataList.Root>
       <Flex>
