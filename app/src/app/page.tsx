@@ -1,4 +1,9 @@
-import { CHORE_LIST, getStartDate, getWeek } from "@/chores/chores";
+import {
+  CHORE_LIST,
+  getDeadline,
+  getStartDate,
+  getWeek,
+} from "@/chores/chores";
 import { getName } from "@/chores/rooms";
 import LogoutButton from "@/components/main/logout";
 import { RoomsModal } from "@/components/rooms/room-modal";
@@ -12,9 +17,9 @@ export default async function Home() {
   const name = roomNr && (await getName(roomNr));
   const weekNr = await getWeek();
   const chore_list = CHORE_LIST;
-  const currChores = chore_list[weekNr];
-  const startDate = await getStartDate();
+  const currChores = chore_list[weekNr % chore_list.length];
   const names = { _: "" };
+  const deadline = await getDeadline();
 
   for (const chore of Object.entries(currChores)) {
     const [choreName, choreRoom] = chore;
@@ -60,16 +65,10 @@ export default async function Home() {
       <Flex>
         <Text>Deadline: </Text>
         <Text ml={1} fontWeight="bold">
-          {format(
-            add(startDate, { weeks: (weekNr + 1) * 2, days: -1 }),
-            "MMMM dd. "
-          )}
-          (
-          {formatDistance(
-            add(startDate, { weeks: (weekNr + 1) * 2 }),
-            new Date(),
-            { addSuffix: true }
-          )}
+          {format(deadline, "MMMM dd. ")}(
+          {formatDistance(add(deadline, { days: 1 }), new Date(), {
+            addSuffix: true,
+          })}
           )
         </Text>
       </Flex>
