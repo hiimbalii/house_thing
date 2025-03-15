@@ -16,7 +16,7 @@ import LogoutButton from "../main/logout";
 async function RoomCard({ roomNumber }: { roomNumber: string }) {
   const name = await getName(roomNumber);
   const title = name ?? roomNumber;
-  const description = name ? roomNumber : "";
+  const description = name ? roomNumber : "(Unclaimed)";
   return (
     <Card.Root>
       <Card.Body gap="2">
