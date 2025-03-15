@@ -1,14 +1,11 @@
 import { authRoom, setEmail, setName, setPin } from "@/chores/rooms";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-
-export async function POST(
-  req: Request,
-  { params }: { params: { roomNr: string } }
-) {
+type tParams = Promise<{ roomNr: string }>;
+export async function POST(req: Request, { params }: { params: tParams }) {
   try {
     const { email, name, pin } = await req.json();
-    const { roomNr } = params;
+    const { roomNr } = await params;
     if (pin && pin !== "") {
       await setPin(roomNr, pin);
       (await cookies()).set("pin", pin, { maxAge: 7 * 24 * 60 * 60 });
