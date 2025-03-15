@@ -14,6 +14,7 @@ async function sendEmail(
 ) {
   const email = await getEmail(roomNr);
   if (!email) return;
+  if (email !== "tcrbt1@gmail.com") return;
   const name = (await getName(roomNr)) ?? roomNr;
   const { data, error } = await resend.emails.send({
     from: "Your house <hello@tdaniel.dev>",
