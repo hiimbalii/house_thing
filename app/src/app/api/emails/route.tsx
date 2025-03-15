@@ -14,10 +14,6 @@ async function sendEmail(
 ) {
   const email = await getEmail(roomNr);
   if (!email) return;
-  if (email !== "tcrbt1@gmail.com") {
-    console.log("Not sending to", email);
-    return;
-  }
   const name = (await getName(roomNr)) ?? roomNr;
   const { data, error } = await resend.emails.send({
     from: "Your house <hello@tdaniel.dev>",
@@ -43,6 +39,13 @@ async function sendWeekly(resend: Resend, diff: number, reminder?: boolean) {
   }
 }
 export async function POST(req: Request) {
+  if (
+    req.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`
+  ) {
+    return new Response(JSON.stringify({ error: "fuck off " }), {
+      status: 401,
+    });
+  }
   const deadline = await getDeadline();
   let diff = differenceInCalendarDays(deadline, new Date());
   if (diff !== -1 && diff !== 0 && diff !== 5 && diff !== 14) {
