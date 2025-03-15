@@ -9,6 +9,7 @@ import { cookies } from "next/headers";
 export default async function Home() {
   const chores = ["sink room", "shower", "toilet", "hallway"];
   const roomNr = (await cookies()).get("roomNr")?.value;
+  const name = roomNr && (await getName(roomNr));
   const weekNr = await getWeek();
   const chore_list = CHORE_LIST;
   const currChores = chore_list[weekNr];
@@ -24,7 +25,9 @@ export default async function Home() {
       <Text fontSize="2xl">Chores-o-mat</Text>
       <Text fontSize="md">#98 - 1st floor</Text>
       <Flex>
-        <Text fontSize="md">Welcome back {roomNr}</Text>
+        <Text fontSize="md">
+          Welcome back {name} ({roomNr})
+        </Text>
         <LogoutButton />
       </Flex>
       <Text fontSize="xl" mb={2}>
