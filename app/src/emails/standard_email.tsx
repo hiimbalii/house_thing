@@ -78,11 +78,13 @@ export const StandardEmail = ({
               The deadline for this task is:{" "}
               <span className="font-bold">
                 {format(add(new Date(), { days: timeLeft }), "MMMM dd. (EEE, ")}
-                {formatDistance(
-                  add(new Date(), { days: timeLeft }),
-                  new Date(),
-                  { addSuffix: true }
-                )}
+                {timeLeft === 0
+                  ? "today"
+                  : formatDistance(
+                      add(new Date(), { days: timeLeft }),
+                      new Date(),
+                      { addSuffix: true }
+                    )}
                 {")"}
               </span>
             </Text>
