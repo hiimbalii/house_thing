@@ -46,7 +46,7 @@ async function sendWeekly(
     await sendEmail(resend, roomNr, chore, diff, reminder);
   }
 }
-export async function POST(req: Request) {
+export async function GET(req: Request) {
   // if (
   //   req.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`
   // ) {
