@@ -51,6 +51,13 @@ export const StandardEmail = ({
       "Clean the floor and dirty spots on the wall with hot water (mixed w all-purpose cleaner).",
       'While your waiting for the "WC eend", clean the floor of our story/ verdieping (use vacuum cleaner and then hot water).',
     ],
+    hallway: [
+      "Sweep and mop the stairs (preferably both but at least the 1st one)",
+      "If there are any random items that don't belong there toss them (like bags that go in the laundry room, stuff left on chairs, etc)",
+      "Vacuum/sweep and mop the floor",
+      "Put the rugs in front of their respective doors",
+      "You are done :) this week was easy",
+    ],
   };
 
   return (
