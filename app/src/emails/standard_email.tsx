@@ -56,6 +56,7 @@ export const StandardEmail = ({
       "If there are any random items that don't belong there toss them (like bags that go in the laundry room, stuff left on chairs, etc)",
       "Vacuum/sweep and mop the floor",
       "Put the rugs in front of their respective doors",
+      "Including the laundry room is up to your discretion - I don't think it's our floors duty",
       "You are done :) this week was easy",
     ],
   };
