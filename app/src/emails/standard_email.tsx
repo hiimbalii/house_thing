@@ -55,7 +55,7 @@ export const StandardEmail = ({
       "Sweep and mop the stairs (preferably both but at least the 1st one)",
       "If there are any random items that don't belong there toss them (like bags that go in the laundry room, stuff left on chairs, etc)",
       "Vacuum/sweep and mop the floor",
-      "Put the rugs in front of their respective doors",
+      "Clean the rugs (the common ones are fine - personals are up to u)",
       "Including the laundry room is up to your discretion - I don't think it's our floors duty",
       "You are done :) this week was easy",
     ],
