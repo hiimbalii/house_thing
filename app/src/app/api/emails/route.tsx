@@ -56,7 +56,7 @@ export async function GET(req: Request) {
   // }
   const deadline = await getDeadline();
   let diff = differenceInCalendarDays(deadline, new Date());
-  if (diff !== 1 && diff !== 5 && diff !== 14) {
+  if (diff !== 1 && diff !== 0 && diff !== 13 && diff !== 5 && diff !== 14) {
     return new Response(JSON.stringify({ error: "Not today: ", diff }), {
       status: 500,
     });
